@@ -1,20 +1,20 @@
 import { useState, useEffect } from 'react';
 import { api } from './services';
 import Character from './components/character';
+import Pagination from './components/pagination';
 import './App.css';
 import logo from './assets/logo.png';
 import search from './assets/search.svg';
-import prev from './assets/prev.svg';
-import next from './assets/next.svg';
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [info, setInfo] = useState(null);
   const [characters, setCharacters] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     (async () => {
-      await api.get('/character').then((response) => {
+      await api.get(`/character?page=${currentPage}`).then((response) => {
         setLoading(false);
 
         if (response.status == 200) {
@@ -24,11 +24,9 @@ function App() {
           setInfo(null);
           setCharacters(null);
         }
-
-        console.log(characters);
       });
     })();
-  }, []);
+  }, [currentPage]);
 
   return (
     <>
@@ -54,17 +52,7 @@ function App() {
                 <Character key={character.id} data={character} />
               ))}
             </div>
-            <div className="pagination">
-              <button>
-                <img src={prev} alt="prev" />
-              </button>
-              <button>1</button>
-              <button className="current">2</button>
-              <button>3</button>
-              <button>
-                <img src={next} alt="next" />
-              </button>
-            </div>
+            <Pagination info={{ currentPage, setCurrentPage, ...info }} />
           </>
         ) : (
           <div>No characters found.</div>
