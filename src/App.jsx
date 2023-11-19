@@ -1,11 +1,35 @@
+import { useState, useEffect } from 'react';
+import { api } from './services';
+import Character from './components/character';
 import './App.css';
 import logo from './assets/logo.png';
 import search from './assets/search.svg';
 import prev from './assets/prev.svg';
 import next from './assets/next.svg';
-import rick from './assets/rick.jpeg';
 
 function App() {
+  const [loading, setLoading] = useState(true);
+  const [info, setInfo] = useState(null);
+  const [characters, setCharacters] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      await api.get('/character').then((response) => {
+        setLoading(false);
+
+        if (response.status == 200) {
+          setInfo(response.data.info);
+          setCharacters(response.data.results);
+        } else {
+          setInfo(null);
+          setCharacters(null);
+        }
+
+        console.log(characters);
+      });
+    })();
+  }, []);
+
   return (
     <>
       <header className="header">
@@ -21,67 +45,30 @@ function App() {
             </button>
           </div>
         </div>
-        <div className="content">
-          <div className="item">
-            <img src={rick} />
-            <div className="backdrop">
-              <h3>Rick Sanchez</h3>
+        {loading ? (
+          <div className="loading"></div>
+        ) : characters ? (
+          <>
+            <div className="content">
+              {characters.map((character) => (
+                <Character key={character.id} data={character} />
+              ))}
             </div>
-          </div>
-          <div className="item">
-            <img src={rick} />
-            <div className="backdrop">
-              <h3>Rick Sanchez</h3>
+            <div className="pagination">
+              <button>
+                <img src={prev} alt="prev" />
+              </button>
+              <button>1</button>
+              <button className="current">2</button>
+              <button>3</button>
+              <button>
+                <img src={next} alt="next" />
+              </button>
             </div>
-          </div>
-          <div className="item">
-            <img src={rick} />
-            <div className="backdrop">
-              <h3>Rick Sanchez</h3>
-            </div>
-          </div>
-          <div className="item">
-            <img src={rick} />
-            <div className="backdrop">
-              <h3>Rick Sanchez</h3>
-            </div>
-          </div>
-          <div className="item">
-            <img src={rick} />
-            <div className="backdrop">
-              <h3>Rick Sanchez</h3>
-            </div>
-          </div>
-          <div className="item">
-            <img src={rick} />
-            <div className="backdrop">
-              <h3>Rick Sanchez</h3>
-            </div>
-          </div>
-          <div className="item">
-            <img src={rick} />
-            <div className="backdrop">
-              <h3>Rick Sanchez</h3>
-            </div>
-          </div>
-          <div className="item">
-            <img src={rick} />
-            <div className="backdrop">
-              <h3>Rick Sanchez</h3>
-            </div>
-          </div>
-        </div>
-        <div className="pagination">
-          <button>
-            <img src={prev} alt="prev" />
-          </button>
-          <button>1</button>
-          <button className="current">2</button>
-          <button>3</button>
-          <button>
-            <img src={next} alt="next" />
-          </button>
-        </div>
+          </>
+        ) : (
+          <div>No characters found.</div>
+        )}
       </main>
       <footer className="footer">
         Developed by{' '}
