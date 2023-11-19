@@ -63,6 +63,7 @@ function App() {
               type="text"
               name="search"
               id="search"
+              placeholder="Search"
             />
             <button onClick={handleSearch}>
               <img src={search} alt="search" />
