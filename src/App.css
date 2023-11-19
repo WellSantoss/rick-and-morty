@@ -102,6 +102,11 @@ body {
   overflow: hidden;
   cursor: pointer;
   font-size: 20px;
+  transition: 0.3s;
+}
+
+.content .item:hover {
+  transform: scale(1.05);
 }
 
 .content .backdrop {
@@ -134,6 +139,11 @@ body {
   cursor: pointer;
   background: none;
   color: #b8b8b8;
+  transition: 0.3s;
+}
+
+.pagination button:hover {
+  color: #fff;
 }
 
 .pagination button.current {

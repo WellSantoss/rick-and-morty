@@ -11,22 +11,42 @@ function App() {
   const [info, setInfo] = useState(null);
   const [characters, setCharacters] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
-    (async () => {
-      await api.get(`/character?page=${currentPage}`).then((response) => {
-        setLoading(false);
-
-        if (response.status == 200) {
-          setInfo(response.data.info);
-          setCharacters(response.data.results);
-        } else {
-          setInfo(null);
-          setCharacters(null);
-        }
-      });
-    })();
+    getCharacters();
   }, [currentPage]);
+
+  const getCharacters = async () => {
+    setLoading(true);
+
+    await api
+      .get('/character', {
+        params: {
+          page: currentPage,
+          name: searchText.trim(),
+        },
+      })
+      .then((response) => {
+        setInfo(response.data.info);
+        setCharacters(response.data.results);
+      })
+      .catch(() => {
+        setInfo(null);
+        setCharacters(null);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const handleSearch = () => {
+    if (currentPage == 1) {
+      getCharacters();
+    } else {
+      setCurrentPage(1);
+    }
+  };
 
   return (
     <>
@@ -37,8 +57,14 @@ function App() {
         <div className="title">
           <h1>Characters</h1>
           <div className="search">
-            <input type="text" name="search" id="search" />
-            <button>
+            <input
+              onChange={(e) => setSearchText(e.target.value)}
+              onKeyDown={(e) => (e.keyCode == 13 ? handleSearch() : null)}
+              type="text"
+              name="search"
+              id="search"
+            />
+            <button onClick={handleSearch}>
               <img src={search} alt="search" />
             </button>
           </div>
