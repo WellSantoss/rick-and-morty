@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
+body {
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.8) 100%
+    ),
+    url(/src/assets/background.jpg) no-repeat center,
+    lightgray 50% / cover no-repeat;
+  background-attachment: fixed;
+}
+
+#root {
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 0 16px;
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 16px 0;
+  flex-shrink: 0;
+}
+
+.header img {
+  margin: 0 auto;
+}
+
+#root main {
+  flex: 1 0 auto;
+  padding: 80px 0px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 64px;
+}
+
+.title h1 {
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+}
+
+.search img {
+  height: 20px;
+}
+
+.search input {
+  border-radius: 4px 0px 0px 4px;
+  border: 1px solid #b8b8b8;
+  border-right: none;
+  background: #fff;
+  padding: 8px;
+}
+
+.search input:focus {
+  outline: none;
+}
+
+.search button {
+  border-radius: 0px 4px 4px 0px;
+  border: 1px solid #b8b8b8;
+  border-left: none;
+  background: #fff;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.footer {
+  text-align: center;
+  padding: 16px 0;
+  color: #b8b8b8;
+  flex-shrink: 0;
+}
+
+.footer a {
+  color: #fff;
+  font-weight: 500;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 32px;
+}
+
+.content .item {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.content .backdrop {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(0, 0, 0, 0.7) 72.92%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
+  padding: 16px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.pagination {
+  margin-top: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pagination button {
+  padding: 8px;
+  cursor: pointer;
+  background: none;
+  color: #b8b8b8;
+}
+
+.pagination button.current {
+  color: #fff;
+  font-weight: 600;
+  cursor: default;
+}
