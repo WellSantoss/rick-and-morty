@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import prev from '../../assets/prev.svg';
 import next from '../../assets/next.svg';
 
@@ -40,6 +41,10 @@ const Pagination = ({ info }) => {
       ))}
     </div>
   );
+};
+
+Pagination.propTypes = {
+  info: PropTypes.object,
 };
 
 export default Pagination;

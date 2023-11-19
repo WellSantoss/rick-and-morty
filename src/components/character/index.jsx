@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 const Character = ({ data }) => {
   return (
     <div className="item">
@@ -7,6 +9,10 @@ const Character = ({ data }) => {
       </div>
     </div>
   );
+};
+
+Character.propTypes = {
+  data: PropTypes.object,
 };
 
 export default Character;
